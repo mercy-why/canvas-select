@@ -7,7 +7,7 @@ export interface BaseShape {
     index: number;
     uuid: string;
 }
-export declare type Point = [number, number];
+export type Point = [number, number];
 export interface Style {
     strokeStyle: string;
     fillStyle: string;

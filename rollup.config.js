@@ -8,7 +8,7 @@ export default {
   output: {
     exports: 'auto',
     file: 'lib/canvas-select.min.js',
-    format: 'umd',
+    format: 'es',
     name: 'CanvasSelect',
     sourcemap: true,
   },

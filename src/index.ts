@@ -25,9 +25,9 @@ export default class CanvasSelect extends EventBus {
 
     ctrlRadius = 3
 
-    labelFillStyle = '#fff'
+    labelFillStyle = '#000'
 
-    labelFont = '12px serif #000'
+    labelFont = '12px serif'
 
     labelMaxLen = 5
 
@@ -127,26 +127,26 @@ export default class CanvasSelect extends EventBus {
             }
         })
 
-        this.canvas.addEventListener('contextmenu', (e) => {
-            if (this.lock) return;
-            e.preventDefault();
-        });
-        this.canvas.addEventListener('mousewheel', (e: WheelEvent) => {
-            if (this.lock) return;
-            e.preventDefault();
-            this.setScale(e.deltaY < 0);
-            const offsetX = Math.round(e.offsetX / this.scale);
-            const offsetY = Math.round(e.offsetY / this.scale);
-            this.movePoint = [offsetX, offsetY];
-            this.update()
-        });
+        // this.canvas.addEventListener('contextmenu', (e) => {
+        //     if (this.lock) return;
+        //     e.preventDefault();
+        // });
+        // this.canvas.addEventListener('mousewheel', (e: WheelEvent) => {
+        //     if (this.lock) return;
+        //     e.preventDefault();
+        //     this.setScale(e.deltaY < 0);
+        //     const offsetX = Math.round(e.offsetX / this.scale);
+        //     const offsetY = Math.round(e.offsetY / this.scale);
+        //     this.movePoint = [offsetX, offsetY];
+        //     this.update()
+        // });
         this.canvas.addEventListener('mousedown', (e: MouseEvent) => {
             if (this.lock) return;
             const offsetX = Math.round(e.offsetX / this.scale);
             const offsetY = Math.round(e.offsetY / this.scale);
             const mousePoint: Point = [e.offsetX, e.offsetY];
             if (e.buttons === 2) { // 鼠标右键
-                this.remmberOrigin = [e.offsetX - this.originX, e.offsetY - this.originY];
+                // this.remmberOrigin = [e.offsetX - this.originX, e.offsetY - this.originY];
             } else if (e.buttons === 1) { // 鼠标左键
                 // 点击到控制点
                 // @ts-ignore
@@ -226,9 +226,9 @@ export default class CanvasSelect extends EventBus {
             this.movePoint = [offsetX, offsetY];
             if (e.buttons === 2 && e.which === 3) {
                 // 拖动背景
-                this.originX = Math.round(e.offsetX - this.remmberOrigin[0]);
-                this.originY = Math.round(e.offsetY - this.remmberOrigin[1]);
-                this.update();
+                // this.originX = Math.round(e.offsetX - this.remmberOrigin[0]);
+                // this.originY = Math.round(e.offsetY - this.remmberOrigin[1]);
+                // this.update();
             } else if (e.buttons === 1 && this.activeShape) {
                 if (this.ctrlIndex > -1 && this.isInBackground(e)) {
                     const [[x, y]] = this.remmber;
@@ -589,10 +589,10 @@ export default class CanvasSelect extends EventBus {
             const toleft = (this.IMAGE_ORIGIN_WIDTH - point[0]) < (text.width + 4) / this.scale;
             const toTop = (this.IMAGE_ORIGIN_HEIGHT - point[1]) < 16 / this.scale;
             this.ctx.save();
+            // this.ctx.fillRect(toleft ? (x - text.width - 3) : (x + 1), toTop ? (y - 15) : y + 1, text.width + 4, 16);
             this.ctx.fillStyle = labelFillStyle || this.labelFillStyle;
-            this.ctx.fillRect(toleft ? (x - text.width - 3) : (x + 1), toTop ? (y - 15) : y + 1, text.width + 4, 16);
             this.ctx.font = labelFont || this.labelFont;
-            this.ctx.strokeText(newStr, toleft ? (x - text.width - 2) : (x + 2), toTop ? (y - 4) : y + 12, 80);
+            this.ctx.fillText(newStr, toleft ? (x - text.width - 2) : (x + 2), toTop ? (y - 4) : y + 12, 80);
             this.ctx.restore();
         }
     }
